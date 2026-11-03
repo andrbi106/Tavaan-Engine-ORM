@@ -369,8 +369,7 @@ abstract class Model
      */
     public function chunk(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        $results = $this->skip(0)->take($count)->get(); while (count($results) > 0) { foreach ($results as $r) $callback($r); $results = $this->skip(0)->take($count)->get(); } return true;
     }
     /**
      * findOrFail
@@ -399,8 +398,7 @@ abstract class Model
      */
     public function load(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * observe
