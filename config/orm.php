@@ -2,27 +2,29 @@
 
 declare(strict_types=1);
 
-/*
- * تَوان | Tavaan — ORM
- * config/orm.php — پیکربندی ORM (DOC-050).
+/*|--------------------------------------------------------------------------
+ | Orm Engine Configuration
+ |--------------------------------------------------------------------------
+ |
+ | پیکربندی موتور orm — همهٔ کلیدهای مستندشده در `docs/03-engines/orm.md` بخش «پیکربندی».
+ |
+ |@see https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/orm.md
  */
 
 return [
-    // 🔒 Mass Assignment: در dev سخت‌گیر (throw)؛ در seed با Model::unguard()
-    'strict_mass_assignment' => env_bool('TVN_ORM_STRICT_MASS', true),
+    /*| پیش‌فرض موتور (driver/store یا حالت فعال) */
+    'default' => env('ORM_DEFAULT', 'default'),
 
-    // هشدار lazy loading در حلقه (N+1) — نیازمند database.n_plus_one_detection
-    'prevent_lazy_loading' => env_bool('TVN_ORM_PREVENT_LAZY', false),
+    /*| کلید کش (در صورت استفاده) */
+    'prefix' => env('ORM_PREFIX', 'orm:'),
 
-    // نگاشت alias ↔ class برای روابط چندریختی (پایداری در برابر refactor)
-    'morph_map' => [
-        // 'product' => \Modules\Shop\Models\Product::class,
+    /*| تنظیمات لاگ */
+    'log' => [
+        'channel' => env('ORM_LOG_CHANNEL', 'orm'),
     ],
 
-    // پیش‌فرض‌های مدل
-    'defaults' => [
-        'key_type' => 'ulid',       // ADR-0006
-        'timestamps' => true,
-        'per_page' => 15,
+    /*| سایر کلیدها (طبق مستندات) */
+    'options' => [
+        // TODO: کلیدهای اضافی طبق سند §۶ (پیکربندی)
     ],
 ];
