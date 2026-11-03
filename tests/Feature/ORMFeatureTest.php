@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Database\ORM\Tests\Feature;
 
-use PHPUnit\Framework\TestCase;
+use Tavaan\Testing\TestCase;
 use Tavaan\Engine\Database\Connection;
 use Tavaan\Engine\Database\ORM\Model;
 use Tavaan\Engine\Database\ORM\ORMServiceProvider;
