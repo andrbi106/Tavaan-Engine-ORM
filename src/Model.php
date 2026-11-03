@@ -377,14 +377,14 @@ abstract class Model
      */
     public function findOrFail(/* ... */): mixed
     {
-        \$result = self::find(\$id); if (\$result === null) throw new \RuntimeException('No query results for model.'); return \$result;
+        $result = self::find($id); if ($result === null) throw new \RuntimeException('No query results for model.'); return $result;
     }
     /**
      * firstOrCreate
      */
     public function firstOrCreate(/* ... */): mixed
     {
-        \$result = \$this->first(); return \$result !== null ? \$result : \$this->insert(\$values);
+        $result = $this->first(); return $result !== null ? $result : $this->insert($values);
     }
     /**
      * lazy
@@ -431,14 +431,14 @@ abstract class Model
      */
     public function refresh(/* ... */): mixed
     {
-        \$fresh = self::find(\$this->getKey()); if (\$fresh !== null) { \$this->attributes = \$fresh->getAttributes(); \$this->syncOriginal(); } return \$this;
+        $fresh = self::find($this->getKey()); if ($fresh !== null) { $this->attributes = $fresh->getAttributes(); $this->syncOriginal(); } return $this;
     }
     /**
      * restore
      */
     public function restore(/* ... */): mixed
     {
-        \$this->setAttribute('deleted_at', null); return \$this->save();
+        $this->setAttribute('deleted_at', null); return $this->save();
     }
     /**
      * toJson
@@ -469,13 +469,13 @@ abstract class Model
      */
     public function with(/* ... */): mixed
     {
-        return \$this;
+        return $this;
     }
     /**
      * withCount
      */
     public function withCount(/* ... */): mixed
     {
-        return \$this;
+        return $this;
     }
 }
