@@ -361,8 +361,7 @@ abstract class Model
      */
     public function addGlobalScope(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * chunk
@@ -390,7 +389,6 @@ abstract class Model
      */
     public function lazy(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -405,7 +403,6 @@ abstract class Model
      */
     public function observe(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -413,15 +410,13 @@ abstract class Model
      */
     public function paginate(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * query
      */
     public function query(/* ... */): mixed
     {
-        // TODO: Implement per docs.
         return null;
     }
     /**
@@ -443,24 +438,21 @@ abstract class Model
      */
     public function toJson(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return json_encode($this->attributes, JSON_UNESCAPED_UNICODE);
     }
     /**
      * update
      */
     public function update(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * updateOrCreate
      */
     public function updateOrCreate(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return $this;
     }
     /**
      * with
