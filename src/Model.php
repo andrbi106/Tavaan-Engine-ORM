@@ -359,71 +359,126 @@ abstract class Model
     /**
      * addGlobalScope
      */
-    public function addGlobalScope()
+    public function addGlobalScope(string $name, callable $scope): void
     {
-        return null;
+        self::$globalScopes[static::class][$name] = $scope;
     }
     /**
      * chunk
      */
-    public function chunk(int $count, callable $callback): self
+    public function chunk(int $count, callable $callback): bool
     {
-        return $this;
+        $page = 0;
+        while (true) {
+            $results = static::where("id", ">", $page * $count);
+            if (empty($results)) break;
+            foreach ($results as $model) {
+                $callback($model);
+            }
+            if (count($results) < $count) break;
+            $page++;
+        }
+        return true;
     }
     /**
      * findOrFail
      */
-    public function findOrFail(mixed $id)
+    public static function findOrFail(mixed $id): static
     {
-        return null;
+        $model = static::find($id);
+        if ($model === null) {
+            throw new \RuntimeException("No query results for model [" . static::class . "] for id [{$id}].");
+        }
+        return $model;
     }
     /**
      * firstOrCreate
      */
-    public function firstOrCreate(array $values)
+    public static function firstOrCreate(array $values, array $attributes = []): static
     {
-        return null;
+        $instance = new static();
+        $conn = self::resolveConnection();
+        if ($conn === null) return new static($values);
+        $sql = "SELECT * FROM {$instance->table} WHERE " . implode(" = ? AND ", array_keys($values)) . " = ?";
+        $row = $conn->selectOne($sql, array_values($values));
+        if ($row !== null) {
+            $m = new static($row);
+            return $m->setExists(true)->syncOriginal();
+        }
+        return static::create(array_merge($values, $attributes));
     }
     /**
      * lazy
      */
-    public function lazy()
+    public static function lazy(int $chunkSize = 1000): \Generator
     {
-        return null;
+        $page = 0;
+        while (true) {
+            $models = static::all();
+            if (empty($models)) break;
+            foreach ($models as $model) yield $model;
+            break;
+        }
     }
     /**
      * load
      */
     public function load(array|string $relations): self
     {
-        return null;
+        return $this;
     }
     /**
      * observe
      */
-    public function observe()
+    public static function observe(object|string $class): void
     {
-        return null;
+        self::$observers[static::class] = is_string($class) ? new $class() : $class;
     }
     /**
      * paginate
      */
-    public function paginate()
+    public static function paginate(int $perPage = 15, int $page = 1): array
     {
-        return null;
+        $total = static::count();
+        $instance = new static();
+        $conn = self::resolveConnection();
+        $models = [];
+        if ($conn !== null) {
+            $offset = ($page - 1) * $perPage;
+            $sql = "SELECT * FROM {$instance->table}";
+            if ($instance->softDeletes) $sql .= " WHERE deleted_at IS NULL";
+            $sql .= " LIMIT {$perPage} OFFSET {$offset}";
+            $rows = $conn->select($sql);
+            foreach ($rows as $row) {
+                $m = new static($row);
+                $models[] = $m->setExists(true)->syncOriginal();
+            }
+        }
+        return [
+            "data" => $models,
+            "total" => $total,
+            "per_page" => $perPage,
+            "current_page" => $page,
+            "last_page" => (int) ceil($total / max(1, $perPage)),
+        ];
     }
     /**
      * query
      */
-    public function query(?string $key = null, mixed $default = null): string
+    public static function query(): array
     {
-        return $key === null ? $this->query->all() : $this->query->get($key, $default);
+        return static::all();
     }
     /**
      * refresh
      */
-    public function refresh()
+    public function refresh(): self
     {
+        $fresh = static::find($this->getKey());
+        if ($fresh !== null) {
+            $this->attributes = $fresh->getAttributes();
+            $this->syncOriginal();
+        }
         return $this;
     }
     /**
@@ -443,16 +498,19 @@ abstract class Model
     /**
      * update
      */
-    public function update(array $values): self
+    public function update(array $values): bool
     {
-        return null;
+        $this->fill($values);
+        return $this->save();
     }
     /**
      * updateOrCreate
      */
-    public function updateOrCreate()
+    public static function updateOrCreate(array $attributes, array $values = []): static
     {
-        return null;
+        $model = static::firstOrCreate($attributes, $values);
+        $model->fill($values)->save();
+        return $model;
     }
     /**
      * with
