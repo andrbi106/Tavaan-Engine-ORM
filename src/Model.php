@@ -355,4 +355,133 @@ abstract class Model
             default => $value,
         };
     }
+
+    /**
+     * addGlobalScope
+     */
+    public function addGlobalScope(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * chunk
+     */
+    public function chunk(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * findOrFail
+     */
+    public function findOrFail(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * firstOrCreate
+     */
+    public function firstOrCreate(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * lazy
+     */
+    public function lazy(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * load
+     */
+    public function load(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * observe
+     */
+    public function observe(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * paginate
+     */
+    public function paginate(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * query
+     */
+    public function query(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * refresh
+     */
+    public function refresh(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * restore
+     */
+    public function restore(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * toJson
+     */
+    public function toJson(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * update
+     */
+    public function update(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * updateOrCreate
+     */
+    public function updateOrCreate(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * with
+     */
+    public function with(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
+    /**
+     * withCount
+     */
+    public function withCount(/* ... */): mixed
+    {
+        // TODO: Implement per docs.
+        return null;
+    }
 }
