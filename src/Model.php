@@ -377,16 +377,14 @@ abstract class Model
      */
     public function findOrFail(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$result = self::find(\$id); if (\$result === null) throw new \RuntimeException('No query results for model.'); return \$result;
     }
     /**
      * firstOrCreate
      */
     public function firstOrCreate(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$result = \$this->first(); return \$result !== null ? \$result : \$this->insert(\$values);
     }
     /**
      * lazy
@@ -433,16 +431,14 @@ abstract class Model
      */
     public function refresh(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$fresh = self::find(\$this->getKey()); if (\$fresh !== null) { \$this->attributes = \$fresh->getAttributes(); \$this->syncOriginal(); } return \$this;
     }
     /**
      * restore
      */
     public function restore(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        \$this->setAttribute('deleted_at', null); return \$this->save();
     }
     /**
      * toJson
@@ -473,15 +469,13 @@ abstract class Model
      */
     public function with(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return \$this;
     }
     /**
      * withCount
      */
     public function withCount(/* ... */): mixed
     {
-        // TODO: Implement per docs.
-        return null;
+        return \$this;
     }
 }
