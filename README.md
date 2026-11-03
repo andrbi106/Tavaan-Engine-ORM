@@ -1,85 +1,69 @@
-# ORM
+# Tavaan Engine — ORM
 
-> Active Record + Repository pattern با Casts، Soft Delete، Collection و dirty tracking.
+> **نگاشت شیء-رابطه** — موتور ORM در فریمورک تَوان
+
+## مشخصات
 
 | فیلد | مقدار |
-|------|------|
-| Engine ID | `tavaan.engine.orm` |
-| DOC-ID | `DOC-050` |
-| Namespace | `Tavaan\Engine\Database\ORM` |
-| اولویت | P0 (فاز M3) |
-| مخزن | https://github.com/andrbi106/Tavaan-Engine-ORM |
-| مستندات | https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/orm.md
+|---|---|
+| شناسه | `tavaan.engine.orm` |
+| نام | `ORM` |
+| عنوان فارسی | نگاشت شیء-رابطه |
+| نسخه | `0.1.0` |
+| namespace | `Tavaan\Engine\Database\ORM` |
+| نوع | `engine` |
 
-## استفاده
+## قراردادها (Contracts)
 
-```php
-use Tavaan\Engine\Database\ORM\Model;
-use Tavaan\Engine\Database\ORM\Collection;
-use Tavaan\Engine\Database\ORM\Repository;
+این موتور قراردادهای زیر را ارائه می‌دهد:
 
-// تعریف Model
-final class User extends Model {
-    protected string $table = 'users';
-    protected array $fillable = ['name', 'email', 'age'];
-    protected array $hidden = ['password'];
-    protected array $casts = ['age' => 'integer', 'settings' => 'json', 'is_active' => 'boolean'];
-    protected bool $timestamps = true;
-    protected bool $softDeletes = true;
-}
+- `Tavaan\Engine\Database\ORM\Contracts\CastInterface`
+- `Tavaan\Engine\Database\ORM\Contracts\ModelInterface`
+- `Tavaan\Engine\Database\ORM\Contracts\ObserverInterface`
+- `Tavaan\Engine\Database\ORM\Contracts\RepositoryInterface`
+- `Tavaan\Engine\Database\ORM\Contracts\ScopeInterface`
 
-// Active Record
-$user = new User(['name' => 'Ali', 'age' => 25]);
-$user->save();             // INSERT
-$user->age = 26;
-$user->save();             // UPDATE (only dirty fields)
-$user->delete();           // Soft delete
-$user->forceDelete();      // Hard delete
+## کلاس‌های اصلی
 
-// Static methods
-$user = User::find(1);
-$users = User::all();
-$users = User::where('age', '>', 18);
-$count = User::count();
-$user = User::create(['name' => 'Sara', 'age' => 30]);
+- `src/Collection.php`
+- `src/Model.php`
+- `src/ORMServiceProvider.php`
+- `src/Repository.php`
 
-// Dirty tracking
-$user->name = 'New Name';
-$user->isDirty();           // true
-$user->isDirty('name');     // true
-$user->isClean('age');      // true
-$user->getDirty();           // ['name' => 'New Name']
+## Service Providerها
 
-// toArray با hidden
-$user->toArray();           // ['name' => 'New Name', 'age' => 26, ...] (no password)
+- `Tavaan\Engine\Database\ORM\ORMServiceProvider`
 
-// Collection
-$coll = new Collection($users);
-$coll->count();
-$coll->first();
-$coll->pluck('name');       // ['Ali', 'Sara', ...]
-$coll->keyBy('id');         // [1 => User, 2 => User]
-$coll->where('age', 25);
-$coll->sortBy('name');
-$coll->map(fn($u) => $u->name);
-$coll->filter(fn($u) => $u->age > 18);
+## وابستگی‌ها
 
-// Repository pattern
-final class UserRepository extends Repository {
-    public function __construct() { parent::__construct(User::class); }
-}
-$repo = new UserRepository();
-$user = $repo->find(1);
-$users = $repo->all();
-$user = $repo->create(['name' => 'Ali', 'age' => 25]);
-$repo->save($user);
-$repo->delete($user);
-$count = $repo->count();
+**موتورهای مورد‌نیاز:**
+
+- `database`
+- `event`
+
+## پیکربندی
+
+- فایل پیکربندی: `config/orm.php`
+- کلید: `orm`
+
+## نصب
+
+```bash
+git clone https://github.com/andrbi106/Tavaan-Engine-ORM.git
 ```
 
-## مستندات
+این موتور بخشی از فریمورک تَوان است و معمولاً به‌صورت مستقیم نصب نمی‌شود،
+بلکه توسط [Tavaan-Core](https://github.com/andrbi106/Tavaan-Core) مدیریت می‌شود.
 
-[docs/03-engines/orm.md](https://github.com/Derogaramin/Tavaan-Doc/blob/main/docs/03-engines/orm.md)
+## روابط با سایر مخازن
 
----
-*Generated on 2026-11-03.*
+| مخزن | نقش |
+|---|---|
+| **`andrbi106/Tavaan-Engine-ORM`** (این مخزن) | موتور ORM |
+| `andrbi106/Tavaan-Engine-Core` | ساختار پایه + درگاه ارتباط موتورها |
+| `andrbi106/Tavaan-Core` | اسکلت اپلیکیشن + همهٔ موتورها |
+| `Derogaramin/Tavaan-Framework` | فریمورک مادر (monorepo) |
+
+## مجوز
+
+MIT — هم‌راستا با فریمورک مادر تَوان.
