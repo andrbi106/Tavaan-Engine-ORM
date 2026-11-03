@@ -368,8 +368,7 @@ abstract class Model
      */
     public function chunk(int $count, callable $callback): self
     {
-        return null;
-    } return true;
+        return $this;
     }
     /**
      * findOrFail
@@ -425,8 +424,7 @@ abstract class Model
      */
     public function refresh()
     {
-        return null;
-    } return $this;
+        return $this;
     }
     /**
      * restore
