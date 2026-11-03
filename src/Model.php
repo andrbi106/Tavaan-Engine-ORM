@@ -50,6 +50,7 @@ abstract class Model
     public function fill(array $attributes): self
     {
         foreach ($attributes as $key => $value) {
+            $key = (string) $key;
             if ($this->isFillable($key)) {
                 $this->setAttribute($key, $value);
             }
@@ -57,7 +58,7 @@ abstract class Model
         return $this;
     }
 
-    public function isFillable(string $key): bool
+    public function isFillable(string|int $key): bool
     {
         if (\in_array($key, $this->guarded, true)) return false;
         if (empty($this->fillable)) return true;
