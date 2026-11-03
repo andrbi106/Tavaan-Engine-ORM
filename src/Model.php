@@ -359,113 +359,115 @@ abstract class Model
     /**
      * addGlobalScope
      */
-    public function addGlobalScope(/* ... */): mixed
+    public function addGlobalScope()
     {
-        return $this;
+        return null;
     }
     /**
      * chunk
      */
-    public function chunk(/* ... */): mixed
+    public function chunk(int $count, callable $callback): self
     {
-        $results = $this->skip(0)->take($count)->get(); while (count($results) > 0) { foreach ($results as $r) $callback($r); $results = $this->skip(0)->take($count)->get(); } return true;
+        return null;
+    } return true;
     }
     /**
      * findOrFail
      */
-    public function findOrFail(/* ... */): mixed
+    public function findOrFail(mixed $id)
     {
-        $result = self::find($id); if ($result === null) throw new \RuntimeException('No query results for model.'); return $result;
+        return null;
     }
     /**
      * firstOrCreate
      */
-    public function firstOrCreate(/* ... */): mixed
+    public function firstOrCreate(array $values)
     {
-        $result = $this->first(); return $result !== null ? $result : $this->insert($values);
+        return null;
     }
     /**
      * lazy
      */
-    public function lazy(/* ... */): mixed
+    public function lazy()
     {
         return null;
     }
     /**
      * load
      */
-    public function load(/* ... */): mixed
+    public function load(array|string $relations): self
     {
-        return $this;
+        return null;
     }
     /**
      * observe
      */
-    public function observe(/* ... */): mixed
+    public function observe()
     {
         return null;
     }
     /**
      * paginate
      */
-    public function paginate(/* ... */): mixed
-    {
-        return $this;
-    }
-    /**
-     * query
-     */
-    public function query(/* ... */): mixed
+    public function paginate()
     {
         return null;
     }
     /**
+     * query
+     */
+    public function query(?string $key = null, mixed $default = null): string
+    {
+        return $key === null ? $this->query->all() : $this->query->get($key, $default);
+    }
+    /**
      * refresh
      */
-    public function refresh(/* ... */): mixed
+    public function refresh()
     {
-        $fresh = self::find($this->getKey()); if ($fresh !== null) { $this->attributes = $fresh->getAttributes(); $this->syncOriginal(); } return $this;
+        return null;
+    } return $this;
     }
     /**
      * restore
      */
-    public function restore(/* ... */): mixed
+    public function restore(): self
     {
-        $this->setAttribute('deleted_at', null); return $this->save();
+        $this->setAttribute("deleted_at", null); return $this->save();
     }
     /**
      * toJson
      */
-    public function toJson(/* ... */): mixed
+    public function toJson(): string
     {
-        return json_encode($this->attributes, JSON_UNESCAPED_UNICODE);
+        return json_encode($this->toArray(), JSON_UNESCAPED_UNICODE);
     }
     /**
      * update
      */
-    public function update(/* ... */): mixed
+    public function update(array $values): self
     {
-        return $this;
+        return null;
     }
     /**
      * updateOrCreate
      */
-    public function updateOrCreate(/* ... */): mixed
+    public function updateOrCreate()
     {
-        return $this;
+        return null;
     }
     /**
      * with
      */
-    public function with(/* ... */): mixed
+    public function with(array|string $relations): self
     {
-        return $this;
+        $clone = clone $this; return $clone;
     }
     /**
      * withCount
      */
-    public function withCount(/* ... */): mixed
+    public function withCount(array|string $relations): self
     {
-        return $this;
+        $clone = clone $this; return $clone;
     }
 }
