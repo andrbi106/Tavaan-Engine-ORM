@@ -10,10 +10,22 @@
       "Tavaan\\Engine\\Database\\ORM\\": "src/"
     }
   },
-  "providers": ["Tavaan\\Engine\\Database\\ORM\\ORMServiceProvider"],
-  "requires": {"php": ">=8.2", "engines": ["database", "event"]},
-  "config": {"file": "config/orm.php", "key": "orm"},
+  "providers": [
+    "Tavaan\\Engine\\Database\\ORM\\ORMServiceProvider"
+  ],
+  "requires": {
+    "php": ">=8.2",
+    "engines": [
+      "database",
+      "event"
+    ]
+  },
+  "config": {
+    "file": "config/orm.php",
+    "key": "orm"
+  },
   "tables": [],
   "commands": [],
-  "docs": "docs/03-engines/orm.md"
+  "docs": "docs/03-engines/orm.md",
+  "class": "Tavaan\\Engine\\Database\\ORM\\ORMEngine"
 }

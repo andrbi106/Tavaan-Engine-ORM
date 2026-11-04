@@ -2,6 +2,8 @@
 
 > **نگاشت شیء-رابطه** — موتور ORM در فریمورک تَوان
 
+این موتور از کلاس پایهٔ `Engine` (در [Tavaan-Engine-Core](https://github.com/andrbi106/Tavaan-Engine-Core)) ارث می‌برد.
+
 ## مشخصات
 
 | فیلد | مقدار |
@@ -11,58 +13,60 @@
 | عنوان فارسی | نگاشت شیء-رابطه |
 | نسخه | `0.1.0` |
 | namespace | `Tavaan\Engine\Database\ORM` |
-| نوع | `engine` |
+| کلاس موتور | `Tavaan\Engine\Database\ORM\ORMEngine` |
+| Facade |  |
 
-## قراردادها (Contracts)
+## کلاس موتور
 
-این موتور قراردادهای زیر را ارائه می‌دهد:
+```php
+namespace Tavaan\Engine\Database\ORM;
 
-- `Tavaan\Engine\Database\ORM\Contracts\CastInterface`
-- `Tavaan\Engine\Database\ORM\Contracts\ModelInterface`
-- `Tavaan\Engine\Database\ORM\Contracts\ObserverInterface`
-- `Tavaan\Engine\Database\ORM\Contracts\RepositoryInterface`
-- `Tavaan\Engine\Database\ORM\Contracts\ScopeInterface`
+use Tavaan\EngineCore\Engine as BaseEngine;
+use Tavaan\EngineCore\Contracts\EngineManifestInterface;
 
-## کلاس‌های اصلی
+final class ORMEngine extends BaseEngine
+{
+    public function __construct(EngineManifestInterface $manifest)
+    {
+        parent::__construct($manifest);
+    }
 
-- `src/Collection.php`
-- `src/Model.php`
-- `src/ORMServiceProvider.php`
-- `src/Repository.php`
+    public function register(ContainerInterface $container): void
+    {
+        parent::register($container);
+        // bindingهای اختصاصی موتور
+    }
+
+    public function boot(): void
+    {
+        parent::boot();
+    }
+}
+```
+
+**فایل:** `src/ORMEngine.php`
+
+## وابستگی‌ها
+
+**موتورهای مورد‌نیاز:** `database`, `event`
 
 ## Service Providerها
 
 - `Tavaan\Engine\Database\ORM\ORMServiceProvider`
 
-## وابستگی‌ها
+## سه درگاه ارتباط با سایر موتورها
 
-**موتورهای مورد‌نیاز:**
-
-- `database`
-- `event`
-
-## پیکربندی
-
-- فایل پیکربندی: `config/orm.php`
-- کلید: `orm`
+| درگاه | الگو | متدهای convenience |
+|---|---|---|
+| Container | pull-based DI | `make()`, `bound()` |
+| Events | pub/sub | `dispatch()`, `listen()` |
+| EngineBus | point-to-point RPC | `call()`, `offer()` |
 
 ## نصب
 
 ```bash
 git clone https://github.com/andrbi106/Tavaan-Engine-ORM.git
 ```
-
-این موتور بخشی از فریمورک تَوان است و معمولاً به‌صورت مستقیم نصب نمی‌شود،
-بلکه توسط [Tavaan-Core](https://github.com/andrbi106/Tavaan-Core) مدیریت می‌شود.
-
-## روابط با سایر مخازن
-
-| مخزن | نقش |
-|---|---|
-| **`andrbi106/Tavaan-Engine-ORM`** (این مخزن) | موتور ORM |
-| `andrbi106/Tavaan-Engine-Core` | ساختار پایه + درگاه ارتباط موتورها |
-| `andrbi106/Tavaan-Core` | اسکلت اپلیکیشن + همهٔ موتورها |
-| `Derogaramin/Tavaan-Framework` | فریمورک مادر (monorepo) |
 
 ## مجوز
 
